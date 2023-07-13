@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-javascript Insert Data By PROxTae</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script>
+        let array_fname = []
+        let array_phone = []
+        let array_email = []
+        
+        if(localStorage.getItem('fname') != null
+        && localStorage.getItem('phone') != null 
+        && localStorage.getItem('email') != null){
+            array_fname = JSON.parse(localStorage.getItem('fname'))
+            array_phone = JSON.parse(localStorage.getItem('phone'))
+            array_email = JSON.parse(localStorage.getItem('email'))
+        }
+
+        function click_submit() {
+
+            if (document.getElementById('fname').value != ''
+            &&  document.getElementById('phone').value != ''
+            &&  document.getElementById('email').value != '') {
+
+                array_fname.push(document.getElementById('fname').value)
+                array_phone.push(document.getElementById('phone').value)
+                array_email.push(document.getElementById('email').value)
+
+                localStorage.setItem('fname',JSON.stringify(array_fname))
+                localStorage.setItem('phone',JSON.stringify(array_phone))
+                localStorage.setItem('email',JSON.stringify(array_email))
+
+                document.getElementById('fname').value = ''
+                document.getElementById('phone').value = ''
+                document.getElementById('email').value = ''
+
+                
+
+            } else {
+                window.alert('Please Input Form valid')
+            }
+
+        }
+
+        function click_cancel() {
+
+            document.getElementById('fname').value = ''
+            document.getElementById('phone').value = ''
+            document.getElementById('email').value = '' 
+
+            document.getElementById('noti_fname').innerHTML = ""
+            document.getElementById('noti_phone').innerHTML = ""
+            document.getElementById('noti_email').innerHTML = ""
+
+        }
+
+        function focusout_fname() {
+            if (document.getElementById('fname').value != '') {
+                document.getElementById('noti_fname').innerHTML = ""
+            } else {
+                document.getElementById('noti_fname').innerHTML = "This Full Name is invalid !!"
+            }
+        }
+        function focusout_phone() {
+            if (document.getElementById('phone').value != '') {
+                document.getElementById('noti_phone').innerHTML = ""
+            } else {
+                document.getElementById('noti_phone').innerHTML = "This Phone is invalid !!"
+            }
+        }
+        function focusout_email() {
+            if (document.getElementById('email').value != '') {
+                document.getElementById('noti_email').innerHTML = ""
+            } else {
+                document.getElementById('noti_email').innerHTML = "This Email is invalid !!"
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Home
+            </a>
+      
+            <a class="navbar-item">
+              Documentation
+            </a>
+      
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                More
+              </a>
+      
+              <div class="navbar-dropdown">
+                <a href="05-js-basic-form.html" class="navbar-item">
+                  Page05
+                </a>
+                <a href="06-js-insert-data.html" class="navbar-item">
+                  Page06
+                </a>
+                <a href="07-js-show-data.html" class="navbar-item">
+                  Page07
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                  Report an issue
+                </a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-danger">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-danger is-outlined">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+    <div class="columns mt-5  is-centered">
+        <div class="column  is-one-third is-half">
+            <div class="card has-background-dark has-text-white ">
+                <div class="card-content ">
+                    <div class="content ">
+
+                        <div class="field">
+                            <label class="label has-text-white">Full Name</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input id="fname" onfocusout="focusout_fname()" class="input" type="text"
+                                    placeholder="full name" value="">
+                                <span class="icon is-small is-left">
+                                    <i class="fa-regular fa-address-card fa-bounce"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                                    <!-- <i class="fas fa-check"></i> -->
+                                </span>
+                            </div>
+                            <p id="noti_fname" class="help is-danger"></p>
+                        </div>
+
+                        <div class="field">
+                            <label class="label has-text-white">Phone</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input id="phone" onfocusout="focusout_phone()" class="input " type="text"
+                                    placeholder="phone" value="">
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-phone-volume fa-shake"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                                    <!-- <i class="fas fa-check"></i> -->
+                                </span>
+                            </div>
+                            <p id="noti_phone" class="help  is-danger"></p>
+                        </div>
+
+                        <div class="field">
+                            <label class="label has-text-white">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input id="email" onfocusout="focusout_email()" class="input " type="email"
+                                    placeholder="Email input" value="">
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-envelope fa-spin"></i>
+                                </span>
+                                <span class="icon is-small is-right">
+                                    <!-- <i class="fas fa-exclamation-triangle"></i> -->
+                                </span>
+                            </div>
+                            <p id="noti_email" class="help is-danger"></p>
+                            <!-- <p class="help is-danger">This email is invalid</p> -->
+                        </div>
+
+                        <div class="field is-grouped mt-4">
+                            <div class="control">
+                                <button class="button is-white" onclick="click_submit()">Submit</button>
+                            </div>
+                            <div class="control">
+                                <button onclick="click_cancel()" class="button  is-white is-outlined">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="column  is-one-third is-half">
+            <div class="card has-background-dark has-text-white ">
+                <div class="card-content ">
+                    <div class="content ">
+                        <p id="output_fname"></p>
+                        <p id="output_phone"></p>
+                        <p id="output_email"></p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
+
+</body>
+
+</html>

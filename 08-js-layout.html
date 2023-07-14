@@ -100,15 +100,15 @@
                 row.insertCell().innerHTML = array_fname[i]
                 row.insertCell().innerHTML = array_phone[i]
                 row.insertCell().innerHTML = array_email[i]
-                row.insertCell().innerHTML = '<a><i class="fa-solid fa-pen "></i></a>'
+                row.insertCell().innerHTML = `<a onclick = "edit_dta(${i})"><i class="fa-solid fa-pen "></i></a>`
                 row.insertCell().innerHTML = `<a onclick="delete_data(${i})"><i class="fa-solid fa-circle-minus fa-shake has-text-danger"></i></a>`
-                // row.insertCell().innerHTML = '<a onclick="delete_data('+i+')"><i class="fa-solid fa-circle-minus fa-shake has-text-danger"></i></a>'
 
             }
         }
 
 
         function insert_data() {
+            refresh();
             const row = tb1.insertRow()
             row.insertCell().innerHTML = '<input id="fname" class="input" type="text" placeholder="Full name">'
             row.insertCell().innerHTML = '<input id="phone" class="input" type="text" placeholder="Phone">'
@@ -119,7 +119,7 @@
 
 
         function cancel() {
-            tb1.deleteRow(tb1.rows.length - 1)
+            refresh();
         }
 
         function save() {
@@ -135,10 +135,6 @@
                 localStorage.setItem('phone', JSON.stringify(array_phone))
                 localStorage.setItem('email', JSON.stringify(array_email))
 
-                document.getElementById('fname').value = ''
-                document.getElementById('phone').value = ''
-                document.getElementById('email').value = ''
-
                 refresh();
 
             } else {
@@ -147,22 +143,60 @@
         }
 
         function delete_data(index) {
-            const i = index
-            console.log(array_fname)
-            console.log(i)
-            // load_data();
-            // const
-            // array_fname = array_fname.slice(1, index);
-            // array_phone =  array_phone.slice(1, index);
-            // array_email =  array_email.slice(1, index);
-            // console.log(array_fname)
-            // localStorage.setItem('fname', JSON.stringify(array_fname))
-            // localStorage.setItem('phone', JSON.stringify(array_phone))
-            // localStorage.setItem('email', JSON.stringify(array_email))
-            
+
+            if (
+                window.confirm('เพราะอะไรเหตุใด เธอต้องไป รักของที่สวยงาม มันหายไปตอนไหน')
+            ) {
+                array_fname.splice(index, 1);
+                array_phone.splice(index, 1);
+                array_email.splice(index, 1);
+
+                localStorage.setItem('fname', JSON.stringify(array_fname))
+                localStorage.setItem('phone', JSON.stringify(array_phone))
+                localStorage.setItem('email', JSON.stringify(array_email))
+
+                refresh();
+            }
+        }
+
+        function edit_dta(index) {
+            refresh();
+            const rows = tb1.rows[index]
+
+            rows.cells[0].innerHTML = `<input value ="${array_fname[index]}" id="fname" class="input" type="text" placeholder="Full name">`
+            rows.cells[1].innerHTML = `<input value ="${array_phone[index]}" id="phone" class="input" type="text" placeholder="Phone">`
+            rows.cells[2].innerHTML = `<input value ="${array_email[index]}" id="email" class="input" type="text" placeholder="Mail">`
+            rows.cells[3].innerHTML = `<a onclick="edit_save(${index})"><i class="fa-solid fa-check fa-beat has-text-success"></i></a>`
+            rows.cells[4].innerHTML = `<a onclick="edit_cancel()"><i class="fa-solid fa-xmark fa-shake has-text-danger"></i></a>`
+
+        }
+
+        function edit_cancel() {
             refresh();
         }
 
+        function edit_save(index) {
+
+            if (document.getElementById('fname').value != ''
+                && document.getElementById('phone').value != ''
+                && document.getElementById('email').value != '') {
+
+                array_fname[index] = document.getElementById('fname').value;
+                array_phone[index] = document.getElementById('phone').value;
+                array_email[index] = document.getElementById('email').value;
+
+                localStorage.setItem('fname', JSON.stringify(array_fname))
+                localStorage.setItem('phone', JSON.stringify(array_phone))
+                localStorage.setItem('email', JSON.stringify(array_email))
+
+                refresh();
+
+            } else {
+                window.alert('Please Input Form valid')
+            }
+
+
+        }
     </script>
 
 </body>
